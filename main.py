@@ -23,10 +23,10 @@ i=1
 # of specific dimension..e(X, Y).   
 display_surface = pygame.display.set_mode((height, width))
 background=pygame.display.set_caption('Space Shooter')
-background = pygame.image.load(r'png/background/image.png')  
-car=[pygame.image.load(r'png/playerLeft.png'),pygame.image.load(r'png/player.png'),pygame.image.load(r'png/playerRight.png')]
+background = pygame.image.load(r'image.png')  
+car=[pygame.image.load(r'playerLeft.png'),pygame.image.load(r'player.png'),pygame.image.load(r'playerRight.png')]
 ########################################################bullet#################################################################
-laser = pygame.image.load(r'png/laserGreen.png')
+laser = pygame.image.load(r'laserGreen.png')
 bulletx=carx+sizecarx//2 +40
 bullety=cary+sizecary//2
 bulletsizex=9
@@ -40,9 +40,9 @@ bigmeteorsizex=136
 bigmeteorsizey=111
 smallmeteorsizex=44
 smallmeteorsizey=42
-smallmeteor = pygame.image.load(r'png/meteorSmall.png')
-bigmeteor = pygame.image.load(r'png/meteorBig.png')
-meteorshot = pygame.image.load(r'png/meteorshot.png').convert()
+smallmeteor = pygame.image.load(r'meteorSmall.png')
+bigmeteor = pygame.image.load(r'meteorBig.png')
+meteorshot = pygame.image.load(r'meteorshot.png').convert()
 meteorshot.set_colorkey(white)
 smallmeteorx=randint(0,height-smallmeteorsizex)
 smallmeteory=randint(0,width-smallmeteorsizey)
@@ -101,8 +101,17 @@ while True:
         backgroundx=-806
     if keys[pygame.K_UP]:
         backgroundy += fps
+        for x in smallmeteorlist:
+            x.meteory+=fps
+        for x in bigmeteorlist:
+            x.meteory+=fps
+
     if keys[pygame.K_DOWN]:
-        backgroundy -= fps
+        backgroundy -= fps-5
+        for x in smallmeteorlist:
+            x.meteory-=fps-5
+        for x in bigmeteorlist:
+            x.meteory-=fps-5
 
     if keys[pygame.K_LEFT]:
         i=0
@@ -111,6 +120,11 @@ while True:
             x.meteorx+=fps
         for x in bigmeteorlist:
             x.meteorx+=fps
+        for x in bulletlist1:
+            x.bulletx+=fps
+        for x in bulletlist2:
+            x.bulletx+=fps
+
     if keys[pygame.K_RIGHT]:
         i=2
         backgroundx -= fps
@@ -118,6 +132,10 @@ while True:
             x.meteorx-=fps
         for x in bigmeteorlist:
             x.meteorx-=fps
+        for x in bulletlist1:
+            x.bulletx-=fps
+        for x in bulletlist2:
+            x.bulletx-=fps
 ##    if keys[pygame.K_SPACE]:
 ##        playershot=Bullet(bulletx,bullety)
 ##        bulletlist.append(playershot)
